@@ -3,6 +3,7 @@ import keyboard;
 from selenium import webdriver;
 from selenium.webdriver import ActionChains;
 from selenium.common.exceptions import NoSuchElementException;
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.keys import Keys;
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -13,16 +14,28 @@ import threading
 import sys
 import os
 import math
-import tkinter as tk
+from tkinter import *
+window=Tk()
+# add widgets here
 
-window = tk.TK()
+window.title('Hello Python')
+window.geometry("300x200+10+20")
 window.mainloop()
 
-School = #Enter the School Name
-username_string = #Enter the username
-password_string = #Enter your password
-mode_to_play = #Enter you mode that you want to play either Garage or Studio
-games_to_play = #Enter the number of games to play
+#Enter the School Name
+School = ''
+#Enter the username
+username_string = ''
+#Enter your password
+password_string = ''
+#Enter you mode that you want to play either Garage or Studio
+mode_to_play = ''
+#Enter the number of games to play
+games_to_play =
+#Pin
+pin_string = '';
+#Do you want to use password or pin
+chosen_password = "Password"
 
 option = webdriver.ChromeOptions()
 
@@ -36,21 +49,37 @@ option.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleW
 driver = webdriver.Chrome(executable_path=r"C:\Users\MTK29\Downloads\chromedriver.exe", options = option)
 
 
-if (School == 'Penglais'):
 
-  website = driver.get("https://play.ttrockstars.com/auth/school/student/5197/password")
-
-elif(School == 'Plascrug'):
-
-  website = driver.get("https://play.ttrockstars.com/auth/school/student/5182/password")
+website = driver.get("https://play.ttrockstars.com/auth/school/student")
 
 
 
 time.sleep(5)
 
 
+schoolForm = driver.find_element_by_id("mat-input-0")
+
+schoolForm.click()
+time.sleep(1)
+schoolForm.send_keys(School)
+time.sleep(1)
+
+autocomplete_School = driver.find_element_by_xpath("/html/body/div[2]/div/div/div/mat-option")
+
+time.sleep(5)
+
+autocomplete_School.click()
+
+
+
+
+time.sleep(3)
+
+
 
 username = driver.find_element_by_id('mat-input-1')
+
+print("Check the School name")
 
 username.clear()
 username.click()
@@ -58,11 +87,27 @@ username.send_keys(username_string)
 
 time.sleep(1)
 
-password = driver.find_element_by_id('mat-input-2')
-
-password.clear()
-password.click()
-password.send_keys(password_string)
+if(chosen_password == 'Password'):
+  password_button = driver.find_element_by_xpath("/html/body/ttr-root/ttr-root-app/div/div/section/ttr-login2/ttr-splash/div/div/div/ttr-login-form/div/form/mat-card/div[3]/div[2]/button")
+  time.sleep(0.5)
+  password_button.click()
+  time.sleep(1.5)
+  password = driver.find_element_by_id('mat-input-2')
+  time.sleep(1)
+  password.clear()
+  password.click()
+  password.send_keys(password_string)
+elif(chosen_password == "Pin"):
+  pin_button = driver.find_element_by_xpath("/html/body/ttr-root/ttr-root-app/div/div/section/ttr-login2/ttr-splash/div/div/div/ttr-login-form/div/form/mat-card/div[3]/div[1]/button")
+  time.sleep(0.5)
+  pin_button.click()
+  time.sleep(1.5)
+  pin = driver.find_element_by_id('mat-input-2')
+  time.sleep(1)
+  pin.clear()
+  pin.click()
+  pin.send_keys(pin_string)
+  
 
 time.sleep(3)
 
@@ -107,7 +152,7 @@ def play_again():
       time.sleep(7)
     elif(mode_to_play == 'Garage'):
       driver.find_element_by_xpath("/html/body/ttr-root/ttr-root-app/div/div/section/ttr-garage/ttr-game-holder/div/div/div/button[2]").click()
-      time.sleep(7)
+      time.sleep(5.5)
 
     
 
@@ -275,11 +320,11 @@ def key_press_studio():
 
 for i in range(games_to_play):
   try:
-    for i in range(400000000):   
+    for i in range(400000000000000):   
       key_press_studio()
-      time.sleep(0.13)
-  except(NoSuchElementException):
-    time.sleep(7)
+      time.sleep(0.15)
+  except(NoSuchElementException, StaleElementReferenceException):
+    time.sleep(2)
     try:
       play_again()
     except(NoSuchElementException):

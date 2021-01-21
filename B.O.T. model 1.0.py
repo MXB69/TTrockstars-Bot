@@ -13,6 +13,10 @@ import threading
 import sys
 import os
 import math
+import tkinter as tk
+
+window = tk.TK()
+window.mainloop()
 
 School = #Enter the School Name
 username_string = #Enter the username

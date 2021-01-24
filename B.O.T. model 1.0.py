@@ -126,12 +126,10 @@ option.add_experimental_option("excludeSwitches", ["enable-automation"])
 option.add_experimental_option('useAutomationExtension', False)
 
 option.add_argument("window-size=1280,800")
-option.add_argument(
-    "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
 
 
 driver = webdriver.Chrome(
-    executable_path=r"C:\Users\MTK29\Downloads\chromedriver.exe", options=option)
+    executable_path=r".\chromedriver.exe", options=option)
 
 
 website = driver.get("https://play.ttrockstars.com/auth/school/student")
